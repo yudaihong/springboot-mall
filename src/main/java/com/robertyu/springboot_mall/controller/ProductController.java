@@ -1,13 +1,14 @@
 package com.robertyu.springboot_mall.controller;
 
+import com.robertyu.springboot_mall.dto.ProductRequest;
 import com.robertyu.springboot_mall.model.Product;
 import com.robertyu.springboot_mall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 public class ProductController {
@@ -21,5 +22,21 @@ public class ProductController {
         }else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }
+
+    /*
+    createdProduct 註解 @Valid 需要加上才會使 dto.ProductRequest @NotNull註解 生效
+    API_FLOW
+    Step1.create
+    Step2.afterCreate check
+    Step3.return Https.Status.Create
+     */
+    @PostMapping("/products")
+    public ResponseEntity<Product>creatProduct(@RequestBody @Valid ProductRequest productRequest) {
+        Integer productId = productService.createProduct(productRequest);
+
+        Product product = productService.getProductById(productId);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
 }
