@@ -7,5 +7,8 @@ public interface ProductDao {
 
     //查詢商品，透過ProductId
     Product getProductById(Integer productId);
+    //新增商品
     Integer createProduct(ProductRequest productRequest);
+    //更新商品資訊
+    void updateProduct(Integer productId , ProductRequest productRequest );
 }
