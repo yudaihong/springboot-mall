@@ -1,10 +1,13 @@
 package com.robertyu.springboot_mall.dao;
 
+import com.robertyu.springboot_mall.constant.ProductCategory;
 import com.robertyu.springboot_mall.dto.ProductRequest;
 import com.robertyu.springboot_mall.model.Product;
 
-public interface ProductDao {
+import java.util.List;
 
+public interface ProductDao {
+    List<Product> getProducts(ProductCategory category , String search);
     //查詢商品，透過ProductId
     Product getProductById(Integer productId);
     //新增商品
@@ -13,4 +16,5 @@ public interface ProductDao {
     void updateProduct(Integer productId , ProductRequest productRequest );
     //刪除商品
     void deleteProductById(Integer productId);
+
 }
