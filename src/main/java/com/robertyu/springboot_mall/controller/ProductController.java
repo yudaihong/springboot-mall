@@ -1,6 +1,7 @@
 package com.robertyu.springboot_mall.controller;
 
 import com.robertyu.springboot_mall.constant.ProductCategory;
+import com.robertyu.springboot_mall.dto.ProductQueryParams;
 import com.robertyu.springboot_mall.dto.ProductRequest;
 import com.robertyu.springboot_mall.model.Product;
 import com.robertyu.springboot_mall.service.ProductService;
@@ -19,10 +20,20 @@ public class ProductController {
 
     @GetMapping("/products")
     public ResponseEntity<List<Product>>getProducts(
+            //查詢條件 Filtering
             @RequestParam(required = false) ProductCategory category,
-            @RequestParam(required = false) String search
+            @RequestParam(required = false) String search,
+            //排序 Sorting
+            @RequestParam(defaultValue = "created_date") String orderBy ,
+            @RequestParam(defaultValue = "desc") String sort
             ){
-        List<Product>productList = productService.getProducts(category,search);
+        ProductQueryParams productQueryParams = new ProductQueryParams();
+        productQueryParams.setCategory(category);
+        productQueryParams.setSearch(search);
+        productQueryParams.setOrderBy(orderBy);
+        productQueryParams.setSort(sort);
+
+        List<Product>productList = productService.getProducts(productQueryParams);
 
         return ResponseEntity.status(HttpStatus.OK).body(productList);
     }
