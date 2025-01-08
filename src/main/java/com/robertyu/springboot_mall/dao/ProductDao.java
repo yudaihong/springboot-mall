@@ -7,6 +7,9 @@ import com.robertyu.springboot_mall.model.Product;
 import java.util.List;
 
 public interface ProductDao {
+
+    Integer countProduct(ProductQueryParams productQueryParams);
+
     List<Product> getProducts(ProductQueryParams productQueryParams);
     //查詢商品，透過ProductId
     Product getProductById(Integer productId);
